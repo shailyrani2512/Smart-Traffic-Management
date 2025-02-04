@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Traffic Prediction Using Machine Learning</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css">
+</head>
+
+<body style="font-family: 'Roboto', sans-serif; margin: 0;background-image: linear-gradient(to right, #1f1c45 67%, #db341e 33%)">
+
+    <div class="hero_area">
+        <!-- Header section starts -->
+        <header class="header_section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="navigation navbar navbar-expand-md navbar-dark" style="margin-left: 500px;">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarsExample04" style="color: white;">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" style="color: white;margin-left: 50px;" href="{{url_for('upload')}}">Upload</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" style="color: white;margin-left: 30px;" href="{{url_for('model')}}">Model</a>
+                                    </li>
+                                    <li class="nav-item dropdown" style="">
+                                        <a class="nav-link dropdown-toggle" style="color: white; margin-left: 30px;" href="#" id="predictionDropdown"
+                                            role="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Prediction
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="predictionDropdown">
+                                            <a class="dropdown-item" style="color: rgb(0, 0, 0); margin-left: 30px;" href="{{url_for('prediction')}}">vehical Prediction
+                                            </a>
+                                            <a class="dropdown-item" style="color: rgb(0, 0, 0); margin-left: 30px;" href="{{url_for('forcast')}}">vehical forcast</a>
+                                          
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" style="color: white; margin-left: 30px;" href="{{url_for('map_view')}}">Map</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" style="color: white; margin-left: 30px;" href="{{url_for('index')}}">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+    </div>
+
+    <!-- Page Content -->
+    <h1 style="text-align: center; margin-top: 20px; background-image: linear-gradient(to right, #1f1c45 67%, #db341e 33%);color: aliceblue;">Real-Time Traffic Map</h1>
+    <div id="map" style="height: 600px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"></div>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([18.7, 73.9], 12);
+
+        // Add a tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: 'Map data © OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Variable to store the current marker
+        var currentMarker = null;
+
+        // Function to update the map with a new marker
+        function updateMarker(lat, lon, condition) {
+            // Remove the existing marker if there is one
+            if (currentMarker) {
+                map.removeLayer(currentMarker);
+            }
+
+            // Add a new marker
+            currentMarker = L.marker([lat, lon]).addTo(map)
+                .bindPopup(`Traffic Condition: ${condition}`)
+                .openPopup();
+        }
+
+        // Add click event to the map
+        map.on('click', function (e) {
+            var lat = e.latlng.lat;
+            var lon = e.latlng.lng;
+
+            console.log(`Clicked location: Latitude ${lat}, Longitude ${lon}`);
+
+            // Fetch traffic condition for the clicked location
+            fetch(`/get_traffic/${lat}/${lon}`)
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to fetch traffic condition.');
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received traffic condition:', data);
+                    // Update marker on the map
+                    updateMarker(lat, lon, data.traffic_condition);
+                })
+                .catch(error => {
+                    console.error('Error fetching traffic condition:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

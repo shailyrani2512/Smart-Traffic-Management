@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block content %}
+<!-- about -->
+<div class="about">
+   <div class="container">
+      <div class="row d_flex grid">
+         <div class="col-md-6" style="margin-top: 100px;">
+            <div class="about_img text_align_center">
+               <figure><img src="/static/images/img1.jpg" alt="#"  width="450px" style="border-radius: 50px;" /></figure>
+            </div>
+         </div>
+         <div class="col-md-6 order1" style="margin-top: 150px;">
+            <div class="titlepage text_align_left">
+               <h2>About Project</h2>
+               <p style="margin-top: -20px;">In the era of rapid urbanization, traffic congestion has emerged as a critical challenge 
+                  for city planners and commuters alike. Traditional traffic management systems often rely 
+                  on static methods that fail to adapt to real-time conditions, leading to inefficient traffic
+                   flow and increased travel times. This project proposes a smart traffic management solution 
+                   that employs machine learning techniques to predict traffic levels effectively. By categorizing
+                    traffic conditions into Low, Normal, High, and Heavy, the system aims to provide timely insights
+                     to traffic management authorities and commuters
+               </p>
+               <a class="read_more" href="{{url_for('about')}}">Read More</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock%}

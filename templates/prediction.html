@@ -1,0 +1,86 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div style="background-image: linear-gradient(to right, #1f1c45 67%, #db341e 33%); padding-top: 150px;padding-bottom: 100px;">
+    <div class="booking1 p-5">
+
+        <h2 style="text-align: center; margin-bottom: 10px; color: #cfdeec; margin-top: -40px;">
+            Prediction</h2>
+
+        {% if result %}
+        <h1 style="color: #ffffff; text-align: center;">New Prediction :- {{result}}</h1>
+        {% endif %}
+
+        <form action="{{url_for('prediction')}}" method="post"
+            style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
+
+            <!-- Updated fields according to column names -->
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="time" style="font-weight: bold; color: #ffffff;">Time:</label>
+                <input type="time" id="time" name="time"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+            </div>
+
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="date" style="font-weight: bold; color: #ffffff;">Date:</label>
+                <input type="date" id="date" name="date"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+            </div>
+
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="day_of_week" style="font-weight: bold; color: #ffffff;">Day of the Week:</label>
+                <select id="day_of_week" name="day_of_week"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+                    <option value="" disabled selected>Choose day</option>
+                    <option value="1">Monday</option>      <!-- Label 1 -->
+                    <option value="5">Tuesday</option>     <!-- Label 5 -->
+                    <option value="6">Wednesday</option>   <!-- Label 6 -->
+                    <option value="4">Thursday</option>    <!-- Label 4 -->
+                    <option value="0">Friday</option>      <!-- Label 0 -->
+                    <option value="2">Saturday</option>    <!-- Label 2 -->
+                    <option value="3">Sunday</option>      <!-- Label 3 -->
+                </select>
+            </div>
+            
+
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="car_count" style="font-weight: bold; color: #ffffff;">Car Count:</label>
+                <input type="number" id="car_count" name="car_count"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+            </div>
+
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="bike_count" style="font-weight: bold; color: #ffffff;">Bike Count:</label>
+                <input type="number" id="bike_count" name="bike_count"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+            </div>
+
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="bus_count" style="font-weight: bold; color: #ffffff;">Bus Count:</label>
+                <input type="number" id="bus_count" name="bus_count"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+            </div>
+
+            <div style="flex: 1 1 30%; margin-bottom: 3px;">
+                <label for="truck_count" style="font-weight: bold; color: #ffffff;">Truck Count:</label>
+                <input type="number" id="truck_count" name="truck_count"
+                    style="width: 100%; height: 40px; padding: 8px; font-size: 16px; border: 1px solid #ced4da; border-radius: 5px;"
+                    required>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="width: 100%; text-align: center; margin-top: 0px;">
+                <button type="submit"
+                    style="width: 100%; padding: 8px; font-size: 16px; color: rgb(0, 0, 0); font-weight: bold; background-color: #ff0909dc; border: none; border-radius: 10px; cursor: pointer;">Predict</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<body style=" background-image: linear-gradient(to right, #1f1c45 67%, #db341e 33%)">
+    <div class="contact3">
+        <div class="container">
+            <center>
+                <div class="row">
+                    <div class="col-md-12" style="margin-top: 250px;">
+                        <div class="titlepage1">
+
+                            <h1>Model Performance</h1>
+                            <form action="{{ url_for('model') }}" method="post" enctype="multipart/form-data">
+
+                                <div class="caption header-text">
+                                    {% if msg %}
+                                    <h2 style="color: rgb(255, 218, 8); font-weight: bolder; margin-top: 15px;">{{ msg }}
+                                    </h2>
+                                    {% endif %}
+                                </div>
+                                <div style="margin-top: 30px;">
+                                    <select class="form-select" name="algo"
+                                        style="width: 430px; background-image: linear-gradient(to right, #db341e 67%, #db341e 33%); color: black; height: 50px; border-radius: 12px; font-weight: bold; text-align: center;margin-top: -200px;">
+                                        <option value="0">Select an Algorithm</option>
+                                        <option value="1">Decision Tree</option>
+                                        <option value="2">Random Forest Classifier</option>
+                                        <option value="3">Logistic Regression</option>
+                                        <option value="4">LSTM</option>
+                                        <option value="5">XGboost</option>
+                                    </select>
+                                </div>
+                                <div style="margin-top: 30px;">
+                                    <button type="submit"
+                                        style="width: 150px; border-radius: 20px; background-color: #db341e; color: black; height: 50px; font-weight: bold;">
+                                        Submit
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+</body>
+{% endblock %}
